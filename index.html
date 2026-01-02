@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Negin Amou | Cyberpunk Portfolio</title>
+    <title>Negin Amou | AI & Computer Vision</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    
     <style>
         :root {
             --bg-color: #050505;
-            --glass-bg: rgba(15, 15, 15, 0.9);
+            --glass-bg: rgba(10, 10, 12, 0.7); /* More transparent for 3D effect */
             --neon-cyan: #00f3ff;
-            --neon-pink: #bc13fe;
+            --neon-purple: #bc13fe;
             --neon-green: #0aff0a;
-            --text-main: #e0e0e0;
+            --text-main: #f0f0f0;
             --font-head: 'Orbitron', sans-serif;
             --font-body: 'Share Tech Mono', monospace;
         }
@@ -28,92 +30,80 @@
             overflow-x: hidden;
         }
 
-        /* --- CRT Scanline Overlay --- */
-        body::before {
-            content: " ";
-            display: block;
+        /* --- 3D Background Canvas --- */
+        #canvas-container {
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 999;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6; /* Subtle blend */
         }
 
         /* --- Layout --- */
         .container {
-            max-width: 1000px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 2rem;
             position: relative;
             z-index: 1; 
         }
 
-        /* --- Typography & Glitch Effect --- */
-        h1, h2, h3 { font-family: var(--font-head); text-transform: uppercase; }
+        /* --- Typography --- */
+        h1, h2, h3 { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 2px; }
         
-        .glitch-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .glitch {
-            font-size: 4rem;
+        .name-header {
+            font-size: 3.5rem;
             font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: 4px;
-            position: relative;
-            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan);
-            animation: glitch-skew 1s infinite linear alternate-reverse;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+            color: white;
         }
 
         .subtitle {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--neon-cyan);
-            text-shadow: 0 0 10px var(--neon-cyan);
             margin-bottom: 2rem;
+            letter-spacing: 1px;
         }
 
-        /* --- Buttons (Download Resume) --- */
+        /* --- Buttons --- */
         .cyber-btn {
-            background: rgba(0, 20, 0, 0.8);
-            border: 2px solid var(--neon-green);
-            color: var(--neon-green);
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
             padding: 12px 30px;
             font-family: var(--font-head);
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
             transition: 0.3s;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 10px rgba(10, 255, 10, 0.2);
+            letter-spacing: 2px;
             margin-bottom: 3rem;
         }
 
         .cyber-btn:hover {
-            background: var(--neon-green);
+            background: var(--neon-cyan);
             color: #000;
-            box-shadow: 0 0 20px var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
         }
 
         /* --- Terminal Typing Box --- */
         .terminal-box {
-            background: rgba(0, 15, 0, 0.9);
-            border: 1px solid var(--neon-green);
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid var(--neon-green);
             padding: 1.5rem;
-            border-radius: 4px;
             margin-bottom: 4rem;
-            box-shadow: 0 0 15px rgba(10, 255, 10, 0.15);
+            backdrop-filter: blur(2px);
         }
         .typing-effect {
-            border-right: 2px solid var(--neon-green);
             white-space: pre-wrap;
             overflow: hidden;
             color: var(--neon-green);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.6;
         }
 
@@ -121,15 +111,15 @@
         section { margin-bottom: 5rem; }
         
         h2 {
-            border-bottom: 2px solid var(--neon-pink);
+            border-bottom: 1px solid var(--neon-purple);
             display: inline-block;
-            padding-bottom: 5px;
-            margin-bottom: 2rem;
-            text-shadow: 0 0 8px var(--neon-pink);
-            font-size: 1.8rem;
+            padding-bottom: 10px;
+            margin-bottom: 2.5rem;
+            font-size: 1.5rem;
+            color: var(--neon-purple);
         }
 
-        /* --- Cards (Experience/Education) --- */
+        /* --- Experience Cards --- */
         .card-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -139,99 +129,85 @@
         .card {
             background: var(--glass-bg);
             border: 1px solid #333;
-            padding: 25px;
-            border-left: 4px solid var(--neon-cyan);
+            padding: 2rem;
             transition: all 0.3s ease;
             position: relative;
+            backdrop-filter: blur(5px);
         }
 
         .card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-            border-left: 4px solid var(--neon-pink);
+            border-color: var(--neon-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
-        .card h3 { margin-top: 0; color: var(--neon-cyan); margin-bottom: 5px; font-size: 1.3rem; }
-        .card .meta { color: #aaa; font-size: 0.95rem; margin-bottom: 1.2rem; display: block; font-style: italic;}
+        .card h3 { margin-top: 0; color: white; margin-bottom: 5px; font-size: 1.2rem; }
+        .card .meta { color: var(--neon-cyan); font-size: 0.9rem; margin-bottom: 1.5rem; display: block; font-weight: bold;}
         .card ul { margin: 0; padding-left: 1.2rem; }
-        .card li { margin-bottom: 0.8rem; line-height: 1.5; color: #ddd; }
+        .card li { margin-bottom: 0.8rem; line-height: 1.6; color: #ccc; font-size: 0.95rem; }
 
-        /* --- Skills Tags (High Contrast) --- */
-        .skills-container { display: flex; flex-wrap: wrap; gap: 12px; }
+        /* --- Skills Tags (Classy Minimalist) --- */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
         .skill-tag {
-            background: var(--neon-pink);
-            border: 1px solid var(--neon-pink);
-            color: #000;
-            padding: 8px 18px;
-            font-family: var(--font-head);
-            font-size: 0.9rem;
-            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            color: var(--neon-cyan);
+            padding: 6px 14px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
             transition: 0.3s;
             cursor: default;
-            text-transform: uppercase;
         }
         .skill-tag:hover {
-            background: transparent;
-            color: var(--neon-pink);
-            box-shadow: 0 0 15px var(--neon-pink);
+            border-color: var(--neon-cyan);
+            background: rgba(0, 243, 255, 0.1);
         }
 
         /* --- Blog Posts --- */
         .blog-post {
             background: var(--glass-bg);
-            border: 1px solid #444;
+            border-left: 3px solid var(--neon-purple);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-        .blog-post h3 { color: var(--neon-green); margin-top: 0; }
-        .blog-date { color: #888; font-size: 0.8rem; display: block; margin-bottom: 1rem; }
-        .blog-link { color: var(--neon-cyan); text-decoration: none; font-weight: bold; }
-        .blog-link:hover { text-decoration: underline; text-shadow: 0 0 5px var(--neon-cyan); }
+        .blog-post h3 { color: white; margin-top: 0; font-size: 1.1rem; }
+        .blog-date { color: #777; font-size: 0.8rem; display: block; margin-bottom: 0.5rem; }
+        .blog-link { color: var(--neon-purple); text-decoration: none; font-size: 0.9rem; }
+        .blog-link:hover { text-decoration: underline; }
 
-        /* --- Contact/Footer --- */
+        /* --- Footer --- */
         .contact-bar {
             text-align: center;
             margin-top: 6rem;
             padding: 3rem 1rem;
-            border-top: 1px solid #333;
-            background: rgba(0,0,0,0.8);
+            border-top: 1px solid #222;
         }
-        .contact-btn {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
+        .contact-link {
+            color: #888;
+            margin: 0 15px;
             text-decoration: none;
-            text-transform: uppercase;
-            font-weight: bold;
             transition: 0.3s;
+            font-size: 0.9rem;
         }
-        .contact-btn:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
+        .contact-link:hover { color: var(--neon-cyan); }
 
         @media (max-width: 768px) {
-            .glitch { font-size: 2.5rem; }
-            .container { padding: 1rem; }
+            .name-header { font-size: 2.5rem; }
+            .container { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<canvas id="matrix-bg" style="position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.25;"></canvas>
+<div id="canvas-container"></div>
 
 <div class="container">
-    <header style="text-align: center; margin-top: 5vh; margin-bottom: 3rem;">
-        <div class="glitch-wrapper">
-            <div class="glitch" data-text="NEGIN AMOU">NEGIN AMOU</div>
-        </div>
-        <div class="subtitle">DATA SCIENTIST // AI RESEARCHER // DEVELOPER</div>
+    <header style="text-align: center; margin-top: 8vh; margin-bottom: 4rem;">
+        <div class="name-header">NEGIN AMOU</div>
+        <div class="subtitle">DATA SCIENTIST &middot; AI RESEARCHER &middot; DEVELOPER</div>
         
         <a href="Resume_NeginAmou.pdf" class="cyber-btn" download>
-            [ DOWNLOAD RESUME.PDF ]
+            DOWNLOAD RESUME
         </a>
     </header>
 
@@ -242,12 +218,12 @@
     </section>
 
     <section>
-        <h2>>> SYSTEM_CAPABILITIES</h2>
+        <h2>>> CAPABILITIES</h2>
         <div class="skills-container">
             <span class="skill-tag">Python (PyTorch, TensorFlow)</span>
-            <span class="skill-tag">Generative AI (GANs)</span>
+            <span class="skill-tag">Generative AI (CycleGAN, Pix2Pix)</span>
             <span class="skill-tag">Computer Vision</span>
-            <span class="skill-tag">3D Point Clouds</span>
+            <span class="skill-tag">3D Point Clouds (Segmentation)</span>
             <span class="skill-tag">C++ & C# (.NET)</span>
             <span class="skill-tag">Data Acquisition (AlazarTech)</span>
             <span class="skill-tag">Cybersecurity (SIEM, OSINT)</span>
@@ -258,35 +234,32 @@
     </section>
 
     <section>
-        <h2>>> DATA_LOGS: EXPERIENCE</h2>
+        <h2>>> EXPERIENCE LOG</h2>
         <div class="card-grid">
             
             <div class="card">
                 <h3>AI and Software Developer</h3>
-                <span class="meta">PhotoMedicine Labs at University of Waterloo | Sep 2025 - Present</span>
+                <span class="meta">PhotoMedicine Labs, UWaterloo | Sep 2025 - Present</span>
                 <ul>
                     <li>Reproduced and validated deep learning frameworks (CycleGAN, RegGAN, Pix2Pix) for virtual multi-staining pipelines using PARS microscopy data.</li>
-                    <li>Implemented complete training and inference pipelines for virtual staining, performed hyperparameter tuning, and reproduced results from the associated research paper.</li>
-                    <li>Developed a Python Flask-based graphical user interface for the PARS virtual staining library to streamline internal testing and data visualization.</li>
-                    <li>Built a high-performance workstation from scratch to support model training and PARS reconstruction workflows (hardware selection, assembly, OS).</li>
-                    <li>Set up, integrated, and programmed Alazar Tech ATS digitizer cards for synchronized PARS data acquisition using C++ backend logic and ImGui for the front-end visualization layer.</li>
-                    <li>Developed synchronized acquisition routines enabling coordinated triggering between lasers, actuators, and digitizer cards for real-time PARS imaging.</li>
-                    <li>Explored the application of UNIT and MUNIT frameworks for next-generation virtual staining research and cross-domain translation of PARS contrast channels.</li>
-                    <li>Collaborated closely with graduate researchers to validate imaging outputs, investigate model failure modes, and support ongoing algorithmic improvements.</li>
+                    <li>Implemented complete training/inference pipelines and performed hyperparameter tuning to reproduce research results.</li>
+                    <li>Developed a Python Flask GUI for the PARS virtual staining library to streamline internal testing.</li>
+                    <li>Built a high-performance workstation from scratch for model training and reconstruction workflows.</li>
+                    <li>Set up and programmed Alazar Tech digitizer cards for synchronized data acquisition using C++ backend logic.</li>
+                    <li>Developed synchronized acquisition routines for real-time PARS imaging triggers.</li>
+                    <li>Explored UNIT and MUNIT frameworks for cross-domain translation of PARS contrast channels.</li>
                 </ul>
             </div>
 
             <div class="card">
-                <h3>AI Computer Vision Researcher / Developer</h3>
-                <span class="meta">Computer Vision for Smart Structure Lab at UWaterloo | May 2025 - Present</span>
+                <h3>AI Computer Vision Researcher</h3>
+                <span class="meta">Smart Structure Lab, UWaterloo | May 2025 - Present</span>
                 <ul>
-                    <li>Worked under the supervision of Professor Haas and sponsored by Ontario Power Generation (OPG), to automate segmentation and templating of 3D point clouds by training AI models.</li>
-                    <li>Developed Bill Of Material Software (BOM) with Python Flask and Postgres to store and categorize structural components.</li>
-                    <li>Innovated automated and human-guided solutions to accurately estimate the point cloud's area, volume and shape category.</li>
-                    <li>Worked with minimal supervision, researched new concepts and developed new skills as the project progressed.</li>
-                    <li>Researched new methods for categorization and measurements of industrial components (beams, columns, floors, etc).</li>
-                    <li>Utilized machine learning and data science techniques to clean, categorize and process point cloud data.</li>
-                    <li>Working towards publishing our innovation and automation software.</li>
+                    <li>Automated segmentation of 3D point clouds for structural components (beams, columns) sponsored by OPG.</li>
+                    <li>Innovated automated solutions to estimate point cloud area, volume, and shape category.</li>
+                    <li>Developed Bill Of Material (BOM) software with Python Flask and Postgres.</li>
+                    <li>Researched methods for categorization and measurement of industrial components.</li>
+                    <li>Utilized machine learning techniques to clean and process large-scale point cloud data.</li>
                 </ul>
             </div>
 
@@ -294,10 +267,10 @@
                 <h3>IT Analyst</h3>
                 <span class="meta">Action Aero | May 2021 - Aug 2024</span>
                 <ul>
-                    <li>Worked on programming, documenting, and debugging custom-made software such as Shipment Estimator, CRM, OEM, and other ongoing projects.</li>
-                    <li>Automated and optimized daily processes by scripting in PowerShell and Python.</li>
-                    <li>Created need-based applications using C# (WinForm/WPF), PHP, and database management systems (Oracle & MySQL).</li>
-                    <li>Conducted data analysis and reporting to identify patterns in production, inventory, and turnaround time using Oracle and MySQL databases, Crystal Reports, Power BI, and Excel.</li>
+                    <li>Programmed and debugged custom software (Shipment Estimator, CRM, OEM).</li>
+                    <li>Automated daily processes using PowerShell and Python.</li>
+                    <li>Created applications using C# (WinForm/WPF), PHP, and Oracle/MySQL databases.</li>
+                    <li>Conducted data analysis using Power BI and Crystal Reports to identify production patterns.</li>
                     <li>Contributed to configuration and maintenance of Cisco network switches.</li>
                 </ul>
             </div>
@@ -307,10 +280,9 @@
                 <span class="meta">Maximus Canada | Jan 2021 - Apr 2021</span>
                 <ul>
                     <li>Used Angular framework and TypeScript to develop web applications.</li>
-                    <li>Developed technical designs according to functional specifications and participated in design reviews.</li>
-                    <li>Performed unit and integration testing to ensure proper and efficient software execution.</li>
+                    <li>Developed technical designs and participated in design reviews.</li>
+                    <li>Performed unit and integration testing; leveraged CI/CD practices for reliable builds.</li>
                     <li>Supported systems in test and production environments by debugging issues.</li>
-                    <li>Developed unit and integration tests while contributing to shared GitHub repositories, leveraging CI/CD practices to ensure reliable builds and smooth deployments.</li>
                 </ul>
             </div>
 
@@ -318,12 +290,10 @@
                 <h3>Cybersecurity Analyst</h3>
                 <span class="meta">Invesco Ltd. | Sep 2020 - Dec 2020</span>
                 <ul>
-                    <li>Worked with SIEM tools to protect, detect, prevent, and respond to cyber threats.</li>
-                    <li>Automated threat detection for firewall using MineMeld to aggregate threat information using OSINT.</li>
-                    <li>Collaborated with other security team members for incident response.</li>
-                    <li>Worked on setting up firewall rules during incident response.</li>
-                    <li>Researched security breaches, CVEs and read on latest cyber attack news to stay updated and provide a report back to the team.</li>
-                    <li>Worked with IBM QRadar, VirusTotal and CrowdStrike to identify threats, and take appropriate actions.</li>
+                    <li>Worked with SIEM tools (IBM QRadar, CrowdStrike) to detect and respond to threats.</li>
+                    <li>Automated threat detection for firewalls using MineMeld and OSINT.</li>
+                    <li>Collaborated on incident response and firewall rule setup.</li>
+                    <li>Researched security breaches and CVEs to provide team reports.</li>
                 </ul>
             </div>
 
@@ -332,10 +302,9 @@
                 <span class="meta">University of Prince Edward Island | Jan 2023 - May 2023</span>
                 <ul>
                     <li>Led the Virtual Wellness project with a team of six developers.</li>
-                    <li>Used PHP for back-end development and JavaScript/CSS/HTML for front end.</li>
-                    <li>Wrote extensive unit tests and security documentation for the project.</li>
-                    <li>Managed the Git repository to ensure seamless collaboration.</li>
-                    <li>Implemented and maintained CI/CD pipelines with GitHub Actions, contributing to repository management, automated testing, and collaborative development workflows.</li>
+                    <li>Used PHP for back-end and JavaScript/CSS/HTML for front-end.</li>
+                    <li>Wrote extensive unit tests and security documentation.</li>
+                    <li>Implemented CI/CD pipelines with GitHub Actions for automated testing.</li>
                 </ul>
             </div>
 
@@ -343,54 +312,47 @@
     </section>
 
     <section>
-        <h2>>> ENCRYPTED_TRANSMISSIONS (BLOG)</h2>
-        <p style="color:#777; margin-bottom: 2rem;">// Accessing archive... Latest thoughts and research notes.</p>
+        <h2>>> RESEARCH NOTES</h2>
         
         <div class="blog-post">
             <h3>Implementing CycleGANs for Virtual Staining</h3>
             <span class="blog-date">2026-01-01</span>
-            <p>A deep dive into how I used RegGAN and Pix2Pix to transform dual-excitation PARS microscopy data into H&E stained images...</p>
-            <a href="#" class="blog-link">[READ_FULL_ENTRY]</a>
+            <p style="color:#aaa; font-size:0.9rem; margin-bottom:1rem;">A deep dive into how I used RegGAN and Pix2Pix to transform dual-excitation PARS microscopy data into H&E stained images.</p>
+            <a href="#" class="blog-link">READ ENTRY &rarr;</a>
         </div>
     </section>
 
     <section>
-        <h2>>> MEMORY_BANKS: EDUCATION</h2>
+        <h2>>> EDUCATION</h2>
         <div class="card-grid">
-            <div class="card" style="border-left-color: var(--neon-green);">
-                <h3>Master of Data Science and Artificial Intelligence</h3>
+            <div class="card" style="border-left: 3px solid var(--neon-cyan);">
+                <h3>Master of Data Science and AI</h3>
                 <span class="meta">University of Waterloo | Sep 2024 - Dec 2025</span>
                 <ul>
-                    <li>Winner of Scotia Bank Entrance Scholarship (CAD 10,000)</li>
-                    <li>CGPA 3.9/4</li>
-                    <li>Worked as Teaching Assistant in CS 136L to answer students' questions and help them with course material</li>
+                    <li>Winner of Scotia Bank Entrance Scholarship (CAD 10,000).</li>
+                    <li>CGPA 3.9/4.</li>
+                    <li>Teaching Assistant for CS 136L.</li>
                 </ul>
             </div>
-            <div class="card" style="border-left-color: var(--neon-green);">
-                <h3>Bachelor of Science in Computer Science and Mathematics</h3>
-                <span class="meta">University of Prince Edward Island | Sep 2019 - May 2023</span>
+            <div class="card" style="border-left: 3px solid var(--neon-cyan);">
+                <h3>BSc in Computer Science and Mathematics</h3>
+                <span class="meta">University of Prince Edward Island | 2019 - 2023</span>
                 <ul>
-                    <li>Winner of "School of Mathematical and Computational Sciences Graduating Student Award" (Highest GPA in the department)</li>
-                    <li>OCGPA: 4.24/4.3</li>
-                    <li>Academic Excellence Award (2019-2023)</li>
-                    <li>Dean's Honours List (2019-2020 & 2021-2022)</li>
-                    <li>Authored technical papers on cybersecurity topics, including OSINT, network security, web application security, cryptography, and AI in cybersecurity.</li>
+                    <li>Winner of Graduating Student Award (Highest GPA in department).</li>
+                    <li>OCGPA: 4.24/4.3.</li>
+                    <li>Authored technical papers on cybersecurity (OSINT, Cryptography, AI).</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <div class="contact-bar">
-        <a href="mailto:namou@uwaterloo.ca" class="contact-btn">INITIALIZE_COMMS</a>
-        <a href="https://github.com/Ergopeoxy" class="contact-btn">ACCESS_GITHUB</a>
-        <a href="https://linkedin.com/in/negin-amou-1142162b1" class="contact-btn">LINK_NET</a>
+        <a href="mailto:namou@uwaterloo.ca" class="contact-link">namou@uwaterloo.ca</a>
+        <a href="https://github.com/Ergopeoxy" class="contact-link">GitHub</a>
+        <a href="https://linkedin.com/in/negin-amou-1142162b1" class="contact-link">LinkedIn</a>
         <br><br>
-        <a href="Resume_NeginAmou.pdf" class="cyber-btn" style="font-size:0.8rem; border-color: #555; color: #888;" download>[ DOWNLOAD_ARCHIVE ]</a>
+        <p style="color:#444; font-size: 0.8rem;">SYSTEM STATUS: ONLINE // © 2026 NEGIN AMOU</p>
     </div>
-
-    <footer style="text-align: center; margin-top: 2rem; color: #555; font-size: 0.8rem;">
-        <p>SYSTEM STATUS: ONLINE // © 2026 NEGIN AMOU</p>
-    </footer>
 </div>
 
 <script>
@@ -398,13 +360,11 @@
     document.addEventListener("DOMContentLoaded", function() {
         const textToType = `> USER: Negin Amou
 > STATUS: Master's Student @ UWaterloo
-> LOADING PROFILE...
-> .........................
-> SUCCESS.
+> SYSTEM: Initializing Profile...
 
-> LOG ENTRY: I bridge the gap between physical hardware and digital intelligence.
-> MISSION: Teaching machines to 'see' biological structures using Generative AI and 3D Vision.
-> CURRENT STATUS: Building the eyes of the future.`;
+> NOTE: I bridge the gap between physical hardware and digital intelligence.
+> FOCUS: Teaching machines to 'see' biological structures using Generative AI and 3D Vision.
+> OBJECTIVE: Building the eyes of the future.`;
 
         const element = document.getElementById('terminal-text');
         let i = 0;
@@ -413,48 +373,85 @@
             if (i < textToType.length) {
                 element.textContent += textToType.charAt(i);
                 i++;
-                setTimeout(typeWriter, 30);
+                setTimeout(typeWriter, 35);
             }
         }
         typeWriter();
     });
 
-    // 2. MATRIX RAIN EFFECT
-    const canvas = document.getElementById('matrix-bg');
-    const ctx = canvas.getContext('2d');
+    // 2. THREE.JS 3D POINT CLOUD ANIMATION
+    const init3D = () => {
+        const container = document.getElementById('canvas-container');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        // Fog for depth
+        scene.fog = new THREE.FogExp2(0x050505, 0.002);
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+        camera.position.z = 50;
 
-    const chars = '01010101ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
-    const charArray = chars.split('');
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
 
-    const drops = [];
-    for (let x = 0; x < columns; x++) { drops[x] = 1; }
+        // Create Particles (Point Cloud)
+        const geometry = new THREE.BufferGeometry();
+        const vertices = [];
+        const particleCount = 2000;
 
-    function drawMatrix() {
-        ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#0aff0a'; 
-        ctx.font = fontSize + 'px monospace';
-
-        for (let i = 0; i < drops.length; i++) {
-            const text = charArray[Math.floor(Math.random() * charArray.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            drops[i]++;
+        // Generating a sphere-like cloud of points
+        for (let i = 0; i < particleCount; i++) {
+            const x = 200 * (Math.random() - 0.5);
+            const y = 200 * (Math.random() - 0.5);
+            const z = 200 * (Math.random() - 0.5);
+            vertices.push(x, y, z);
         }
-    }
-    setInterval(drawMatrix, 50);
 
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+        // Material (Cyan Dots)
+        const material = new THREE.PointsMaterial({
+            color: 0x00f3ff,
+            size: 0.7,
+            transparent: true,
+            opacity: 0.8,
+            sizeAttenuation: true
+        });
+
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate the cloud slowly
+            particles.rotation.x += 0.0005;
+            particles.rotation.y += 0.001;
+
+            // Optional: Subtle Pulse
+            const time = Date.now() * 0.0005;
+            const s = 1 + Math.sin(time) * 0.05;
+            particles.scale.set(s, s, s);
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    };
+
+    // Initialize 3D when page loads
+    window.addEventListener('load', init3D);
+
 </script>
 
 </body>
