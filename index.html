@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Negin Amou</title>
+    <title>Negin Amou | Cyberpunk Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #050505;
-            --glass-bg: rgba(20, 20, 20, 0.8);
+            --glass-bg: rgba(20, 20, 20, 0.9);
             --neon-cyan: #00f3ff;
             --neon-pink: #bc13fe;
             --neon-green: #0aff0a;
@@ -75,7 +75,31 @@
             font-size: 1.5rem;
             color: var(--neon-cyan);
             text-shadow: 0 0 10px var(--neon-cyan);
+            margin-bottom: 2rem;
+        }
+
+        /* --- Buttons (Download Resume) --- */
+        .cyber-btn {
+            background: transparent;
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 10px 25px;
+            font-family: var(--font-head);
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(10, 255, 10, 0.2);
             margin-bottom: 3rem;
+        }
+
+        .cyber-btn:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-green);
         }
 
         /* --- Terminal Typing Effect --- */
@@ -116,41 +140,54 @@
         .card {
             background: var(--glass-bg);
             border: 1px solid #333;
-            padding: 20px;
+            padding: 25px;
             border-left: 4px solid var(--neon-cyan);
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            transform: scale(1.01);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
             border-left: 4px solid var(--neon-pink);
         }
 
-        .card h3 { margin-top: 0; color: var(--neon-cyan); }
-        .card .meta { color: #888; font-size: 0.9rem; margin-bottom: 1rem; display: block; }
+        .card h3 { margin-top: 0; color: var(--neon-cyan); margin-bottom: 5px; }
+        .card .meta { color: #888; font-size: 0.9rem; margin-bottom: 1.2rem; display: block; font-style: italic;}
         .card ul { margin: 0; padding-left: 1.2rem; }
-        .card li { margin-bottom: 0.5rem; }
+        .card li { margin-bottom: 0.8rem; line-height: 1.5; }
 
-        /* --- Skills Tags --- */
-        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        /* --- Skills Tags (UPDATED FOR READABILITY) --- */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 12px; }
         .skill-tag {
-            background: rgba(188, 19, 254, 0.1);
+            background: var(--neon-pink); /* Solid background for contrast */
             border: 1px solid var(--neon-pink);
-            color: var(--neon-pink);
-            padding: 5px 15px;
-            border-radius: 0; /* Boxy look */
-            font-weight: bold;
+            color: #000; /* Black text for readability */
+            padding: 8px 18px;
+            font-family: var(--font-head);
+            font-size: 0.9rem;
+            font-weight: 700;
             transition: 0.3s;
             cursor: default;
+            text-transform: uppercase;
         }
         .skill-tag:hover {
-            background: var(--neon-pink);
-            color: #000;
+            background: transparent;
+            color: var(--neon-pink);
             box-shadow: 0 0 15px var(--neon-pink);
         }
+
+        /* --- Blog Section --- */
+        .blog-post {
+            border: 1px solid #444;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(30, 30, 30, 0.5);
+        }
+        .blog-post h3 { color: var(--neon-green); margin-top: 0; }
+        .blog-date { color: #666; font-size: 0.8rem; display: block; margin-bottom: 1rem; }
+        .blog-link { color: var(--neon-cyan); text-decoration: none; font-weight: bold; }
+        .blog-link:hover { text-decoration: underline; }
 
         /* --- Contact/Footer --- */
         .contact-bar {
@@ -161,7 +198,7 @@
         }
         .contact-btn {
             display: inline-block;
-            margin: 0 10px;
+            margin: 10px;
             padding: 10px 20px;
             border: 1px solid var(--neon-cyan);
             color: var(--neon-cyan);
@@ -194,11 +231,15 @@
 <body>
 
 <div class="container">
-    <header style="text-align: center; margin-top: 5vh; margin-bottom: 3rem;">
+    <header style="text-align: center; margin-top: 5vh; margin-bottom: 2rem;">
         <div class="glitch-wrapper">
             <div class="glitch" data-text="NEGIN AMOU">NEGIN AMOU</div>
         </div>
         <div class="subtitle">DATA SCIENTIST // AI RESEARCHER // DEVELOPER</div>
+        
+        <a href="Resume_NeginAmou.pdf" class="cyber-btn" download>
+            [ DOWNLOAD FULL RESUME.PDF ]
+        </a>
     </header>
 
     <section>
@@ -214,34 +255,45 @@
             <span class="skill-tag">Generative AI (GANs)</span>
             <span class="skill-tag">Computer Vision</span>
             <span class="skill-tag">3D Point Clouds</span>
-            <span class="skill-tag">C++ & C#</span>
+            <span class="skill-tag">C++ & C# (.NET)</span>
             <span class="skill-tag">Data Acquisition (AlazarTech)</span>
             <span class="skill-tag">Cybersecurity (SIEM, OSINT)</span>
             <span class="skill-tag">DevOps & CI/CD</span>
             <span class="skill-tag">Angular & Web Dev</span>
+            <span class="skill-tag">PHP & SQL</span>
         </div>
     </section>
 
     <section>
         <h2>>> DATA_LOGS: EXPERIENCE</h2>
         <div class="card-grid">
+            
             <div class="card">
-                <h3>AI & Software Developer</h3>
-                <span class="meta">PhotoMedicine Labs @ UWaterloo | Sep 2025 - Present</span>
+                <h3>AI and Software Developer</h3>
+                <span class="meta">PhotoMedicine Labs at University of Waterloo | Sep 2025 - Present</span>
                 <ul>
-                    [cite_start]<li>Reproduced deep learning frameworks (CycleGAN, RegGAN, Pix2Pix) for virtual staining pipelines[cite: 18].</li>
-                    [cite_start]<li>Programmed custom C++ workflows for Alazar Tech digitizer cards and synchronized PARS data acquisition[cite: 22].</li>
-                    [cite_start]<li>Developed Python Flask GUI for PARS library to streamline internal testing[cite: 20].</li>
+                    <li>Reproduced and validated the deep learning frameworks used in the lab's virtual multi-staining pipeline, including CycleGAN, RegGAN, and Pix2Pix, using the dual-excitation PARS microscopy dataset.</li>
+                    <li>Implemented complete training and inference pipelines for virtual staining, performed hyperparameter tuning, and reproduced results from the associated research paper.</li>
+                    <li>Developed a Python Flask-based graphical user interface for the PARS virtual staining library to streamline internal testing and data visualization.</li>
+                    <li>Built a high-performance workstation from scratch to support model training and PARS reconstruction workflows (hardware selection, assembly, OS).</li>
+                    <li>Set up, integrated, and programmed Alazar Tech ATS digitizer cards for synchronized PARS data acquisition using C++ backend logic and ImGui for the front-end visualization layer.</li>
+                    <li>Developed synchronized acquisition routines enabling coordinated triggering between lasers, actuators, and digitizer cards for real-time PARS imaging.</li>
+                    <li>Explored the application of UNIT and MUNIT frameworks for next-generation virtual staining research and cross-domain translation of PARS contrast channels.</li>
+                    <li>Collaborated closely with graduate researchers to validate imaging outputs, investigate model failure modes, and support ongoing algorithmic improvements.</li>
                 </ul>
             </div>
 
             <div class="card">
-                <h3>AI Computer Vision Researcher</h3>
-                <span class="meta">Smart Structure Lab @ UWaterloo | May 2025 - Present</span>
+                <h3>AI Computer Vision Researcher / Developer</h3>
+                <span class="meta">Computer Vision for Smart Structure Lab at UWaterloo | May 2025 - Present</span>
                 <ul>
-                    [cite_start]<li>Automated segmentation of 3D point clouds for industrial structural components[cite: 29].</li>
-                    [cite_start]<li>Innovated solutions to estimate area and volume of point clouds with minimal supervision[cite: 30].</li>
-                    [cite_start]<li>Developed Bill Of Material (BOM) software using Python Flask and Postgres[cite: 30].</li>
+                    <li>Worked under the supervision of Professor Haas and sponsored by Ontario Power Generation (OPG), to automate segmentation and templating of 3D point clouds by training AI models.</li>
+                    <li>Developed Bill Of Material Software (BOM) with Python Flask and Postgres to store and categorize structural components.</li>
+                    <li>Innovated automated and human-guided solutions to accurately estimate the point cloud's area, volume and shape category.</li>
+                    <li>Worked with minimal supervision, researched new concepts and developed new skills as the project progressed.</li>
+                    <li>Researched new methods for categorization and measurements of industrial components (beams, columns, floors, etc).</li>
+                    <li>Utilized machine learning and data science techniques to clean, categorize and process point cloud data.</li>
+                    <li>Working towards publishing our innovation and automation software.</li>
                 </ul>
             </div>
 
@@ -249,9 +301,23 @@
                 <h3>IT Analyst</h3>
                 <span class="meta">Action Aero | May 2021 - Aug 2024</span>
                 <ul>
-                    [cite_start]<li>Automated daily processes using PowerShell and Python[cite: 39].</li>
-                    [cite_start]<li>Developed custom C# (WinForm/WPF) and PHP applications[cite: 40].</li>
-                    [cite_start]<li>Conducted data analysis with Oracle, MySQL, and Power BI[cite: 40].</li>
+                    <li>Worked on programming, documenting, and debugging custom-made software such as Shipment Estimator, CRM, OEM, and other ongoing projects.</li>
+                    <li>Automated and optimized daily processes by scripting in PowerShell and Python.</li>
+                    <li>Created need-based applications using C# (WinForm/WPF), PHP, and database management systems (Oracle & MySQL).</li>
+                    <li>Conducted data analysis and reporting to identify patterns in production, inventory, and turnaround time using Oracle and MySQL databases, Crystal Reports, Power BI, and Excel.</li>
+                    <li>Contributed to configuration and maintenance of Cisco network switches.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Angular Developer</h3>
+                <span class="meta">Maximus Canada | Jan 2021 - Apr 2021</span>
+                <ul>
+                    <li>Used Angular framework and TypeScript to develop web applications.</li>
+                    <li>Developed technical designs according to functional specifications and participated in design reviews.</li>
+                    <li>Performed unit and integration testing to ensure proper and efficient software execution.</li>
+                    <li>Supported systems in test and production environments by debugging issues.</li>
+                    <li>Developed unit and integration tests while contributing to shared GitHub repositories, leveraging CI/CD practices to ensure reliable builds and smooth deployments.</li>
                 </ul>
             </div>
 
@@ -259,10 +325,46 @@
                 <h3>Cybersecurity Analyst</h3>
                 <span class="meta">Invesco Ltd. | Sep 2020 - Dec 2020</span>
                 <ul>
-                    [cite_start]<li>Worked with SIEM tools (IBM QRadar, CrowdStrike) to detect and prevent cyber threats[cite: 52, 58].</li>
-                    [cite_start]<li>Automated threat detection for firewalls using MineMeld and OSINT[cite: 53].</li>
+                    <li>Worked with SIEMS tools to protect, detect, prevent, and respond to cyber threats.</li>
+                    <li>Automated threat detection for firewall using MineMeld to aggregate threat information using OSINT.</li>
+                    <li>Collaborated with other security team members for incident response.</li>
+                    <li>Worked on setting up firewall rules during incident response.</li>
+                    <li>Researched security breaches, CVEs and read on latest cyber attack news to stay updated and provide a report back to the team.</li>
+                    <li>Worked with IBM QRadar, VirusTotal and CrowdStrike to identify threats, and take appropriate actions.</li>
                 </ul>
             </div>
+
+             <div class="card">
+                <h3>Tech Lead</h3>
+                <span class="meta">University of Prince Edward Island | Jan 2023 - May 2023</span>
+                <ul>
+                    <li>Led the Virtual Wellness project with a team of six developers.</li>
+                    <li>Used PHP for back-end development and JavaScript/CSS/HTML for front end.</li>
+                    <li>Wrote extensive unit tests and security documentation for the project.</li>
+                    <li>Managed the Git repository to ensure seamless collaboration.</li>
+                    <li>Implemented and maintained CI/CD pipelines with GitHub Actions, contributing to repository management, automated testing, and collaborative development workflows.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>>> ENCRYPTED_TRANSMISSIONS (BLOG)</h2>
+        <p style="color:#777; margin-bottom: 2rem;">// Accessing archive... Latest thoughts and research notes.</p>
+        
+        <div class="blog-post">
+            <h3>Implementing CycleGANs for Virtual Staining</h3>
+            <span class="blog-date">2026-01-01</span>
+            <p>A deep dive into how I used RegGAN and Pix2Pix to transform dual-excitation PARS microscopy data into H&E stained images...</p>
+            <a href="#" class="blog-link">[READ_FULL_ENTRY]</a>
+        </div>
+
+        <div class="blog-post">
+            <h3>Automating 3D Point Cloud Segmentation</h3>
+            <span class="blog-date">2025-11-15</span>
+            <p>Challenges faced while segmenting industrial structural components and how geometric clustering helped solve them...</p>
+            <a href="#" class="blog-link">[READ_FULL_ENTRY]</a>
         </div>
     </section>
 
@@ -270,47 +372,16 @@
         <h2>>> MEMORY_BANKS: EDUCATION</h2>
         <div class="card-grid">
             <div class="card" style="border-left-color: var(--neon-green);">
-                <h3>Master of Data Science & AI</h3>
+                <h3>Master of Data Science and Artificial Intelligence</h3>
                 <span class="meta">University of Waterloo | Sep 2024 - Dec 2025</span>
-                <p>CGPA: 3.9/4.0 | [cite_start]Scotia Bank Entrance Scholarship Winner[cite: 7, 72].</p>
+                <ul>
+                    <li>Winner of Scotia Bank Entrance Scholarship (CAD 10,000)</li>
+                    <li>CGPA 3.9/4</li>
+                    <li>Worked as Teaching Assistant in CS 136L to answer students' questions and help them with course material</li>
+                </ul>
             </div>
             <div class="card" style="border-left-color: var(--neon-green);">
-                <h3>BSc Computer Science & Mathematics</h3>
-                <span class="meta">University of Prince Edward Island | 2019 - 2023</span>
-                <p>OCGPA: 4.24/4.3 | [cite_start]Highest GPA in Department Award[cite: 78, 79].</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="contact-bar">
-        <a href="mailto:namou@uwaterloo.ca" class="contact-btn">INITIALIZE_COMMS (EMAIL)</a>
-        <a href="https://github.com/Ergopeoxy" class="contact-btn">ACCESS_REPO (GITHUB)</a>
-        <a href="https://linkedin.com/in/negin-amou-1142162b1" class="contact-btn">LINK_NET (LINKEDIN)</a>
-    </div>
-
-    <footer style="text-align: center; margin-top: 2rem; color: #555; font-size: 0.8rem;">
-        <p>SYSTEM STATUS: ONLINE // © 2026 NEGIN AMOU</p>
-    </footer>
-</div>
-
-<script>
-    // Typing Effect Script
-    const textToType = "> USER: Negin Amou\n> STATUS: Master's Student @ UWaterloo\n> LOADING PROFILE...\n> .........................\n> SUCCESS.\n\n> BIO: 4+ years experience in Data Science & AI.\n> SPECIALIZATION: Generative AI, Medical Imaging, & 3D Vision.\n> CURRENT_OBJECTIVE: Bridging hardware & deep learning.";
-    
-    const element = document.getElementById('terminal-text');
-    let i = 0;
-
-    function typeWriter() {
-        if (i < textToType.length) {
-            element.innerHTML += textToType.charAt(i);
-            i++;
-            setTimeout(typeWriter, 30); // Adjust speed here
-        }
-    }
-    
-    // Start typing when page loads
-    window.onload = typeWriter;
-</script>
-
-</body>
-</html>
+                <h3>Bachelor of Science in Computer Science and Mathematics</h3>
+                <span class="meta">University of Prince Edward Island | Sep 2019 - May 2023</span>
+                <ul>
+                    <li>Winner of "School of Mathematical and Computational Sciences Graduating Student Award" (Highest GPA in the department
