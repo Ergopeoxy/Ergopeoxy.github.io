@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negin Amou</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --glass-bg: rgba(20, 20, 20, 0.8);
+            --neon-cyan: #00f3ff;
+            --neon-pink: #bc13fe;
+            --neon-green: #0aff0a;
+            --text-main: #e0e0e0;
+            --font-head: 'Orbitron', sans-serif;
+            --font-body: 'Share Tech Mono', monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        /* --- CRT Scanline Effect --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Typography & Glitch Effect --- */
+        h1, h2, h3 { font-family: var(--font-head); text-transform: uppercase; }
+        
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .glitch {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 4px;
+            position: relative;
+            text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-cyan);
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+            margin-bottom: 3rem;
+        }
+
+        /* --- Terminal Typing Effect --- */
+        .terminal-box {
+            background: rgba(0, 20, 0, 0.6);
+            border: 1px solid var(--neon-green);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 4rem;
+            box-shadow: 0 0 15px rgba(10, 255, 10, 0.2);
+        }
+        .typing-effect {
+            border-right: 2px solid var(--neon-green);
+            white-space: pre-wrap;
+            overflow: hidden;
+            color: var(--neon-green);
+            font-size: 1.1rem;
+        }
+
+        /* --- Sections --- */
+        section { margin-bottom: 5rem; }
+        
+        h2 {
+            border-bottom: 2px solid var(--neon-pink);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 8px var(--neon-pink);
+        }
+
+        /* --- Cards (Experience/Education) --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid #333;
+            padding: 20px;
+            border-left: 4px solid var(--neon-cyan);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            border-left: 4px solid var(--neon-pink);
+        }
+
+        .card h3 { margin-top: 0; color: var(--neon-cyan); }
+        .card .meta { color: #888; font-size: 0.9rem; margin-bottom: 1rem; display: block; }
+        .card ul { margin: 0; padding-left: 1.2rem; }
+        .card li { margin-bottom: 0.5rem; }
+
+        /* --- Skills Tags --- */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag {
+            background: rgba(188, 19, 254, 0.1);
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 5px 15px;
+            border-radius: 0; /* Boxy look */
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: default;
+        }
+        .skill-tag:hover {
+            background: var(--neon-pink);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        /* --- Contact/Footer --- */
+        .contact-bar {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid #333;
+        }
+        .contact-btn {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .contact-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        /* --- Animations --- */
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-2deg); }
+            40% { transform: skew(2deg); }
+            60% { transform: skew(-1deg); }
+            80% { transform: skew(3deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        @media (max-width: 768px) {
+            .glitch { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="text-align: center; margin-top: 5vh; margin-bottom: 3rem;">
+        <div class="glitch-wrapper">
+            <div class="glitch" data-text="NEGIN AMOU">NEGIN AMOU</div>
+        </div>
+        <div class="subtitle">DATA SCIENTIST // AI RESEARCHER // DEVELOPER</div>
+    </header>
+
+    <section>
+        <div class="terminal-box">
+            <div class="typing-effect" id="terminal-text"></div>
+        </div>
+    </section>
+
+    <section>
+        <h2>>> SYSTEM_CAPABILITIES</h2>
+        <div class="skills-container">
+            <span class="skill-tag">Python (PyTorch, TensorFlow)</span>
+            <span class="skill-tag">Generative AI (GANs)</span>
+            <span class="skill-tag">Computer Vision</span>
+            <span class="skill-tag">3D Point Clouds</span>
+            <span class="skill-tag">C++ & C#</span>
+            <span class="skill-tag">Data Acquisition (AlazarTech)</span>
+            <span class="skill-tag">Cybersecurity (SIEM, OSINT)</span>
+            <span class="skill-tag">DevOps & CI/CD</span>
+            <span class="skill-tag">Angular & Web Dev</span>
+        </div>
+    </section>
+
+    <section>
+        <h2>>> DATA_LOGS: EXPERIENCE</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>AI & Software Developer</h3>
+                <span class="meta">PhotoMedicine Labs @ UWaterloo | Sep 2025 - Present</span>
+                <ul>
+                    [cite_start]<li>Reproduced deep learning frameworks (CycleGAN, RegGAN, Pix2Pix) for virtual staining pipelines[cite: 18].</li>
+                    [cite_start]<li>Programmed custom C++ workflows for Alazar Tech digitizer cards and synchronized PARS data acquisition[cite: 22].</li>
+                    [cite_start]<li>Developed Python Flask GUI for PARS library to streamline internal testing[cite: 20].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>AI Computer Vision Researcher</h3>
+                <span class="meta">Smart Structure Lab @ UWaterloo | May 2025 - Present</span>
+                <ul>
+                    [cite_start]<li>Automated segmentation of 3D point clouds for industrial structural components[cite: 29].</li>
+                    [cite_start]<li>Innovated solutions to estimate area and volume of point clouds with minimal supervision[cite: 30].</li>
+                    [cite_start]<li>Developed Bill Of Material (BOM) software using Python Flask and Postgres[cite: 30].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>IT Analyst</h3>
+                <span class="meta">Action Aero | May 2021 - Aug 2024</span>
+                <ul>
+                    [cite_start]<li>Automated daily processes using PowerShell and Python[cite: 39].</li>
+                    [cite_start]<li>Developed custom C# (WinForm/WPF) and PHP applications[cite: 40].</li>
+                    [cite_start]<li>Conducted data analysis with Oracle, MySQL, and Power BI[cite: 40].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Cybersecurity Analyst</h3>
+                <span class="meta">Invesco Ltd. | Sep 2020 - Dec 2020</span>
+                <ul>
+                    [cite_start]<li>Worked with SIEM tools (IBM QRadar, CrowdStrike) to detect and prevent cyber threats[cite: 52, 58].</li>
+                    [cite_start]<li>Automated threat detection for firewalls using MineMeld and OSINT[cite: 53].</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>>> MEMORY_BANKS: EDUCATION</h2>
+        <div class="card-grid">
+            <div class="card" style="border-left-color: var(--neon-green);">
+                <h3>Master of Data Science & AI</h3>
+                <span class="meta">University of Waterloo | Sep 2024 - Dec 2025</span>
+                <p>CGPA: 3.9/4.0 | [cite_start]Scotia Bank Entrance Scholarship Winner[cite: 7, 72].</p>
+            </div>
+            <div class="card" style="border-left-color: var(--neon-green);">
+                <h3>BSc Computer Science & Mathematics</h3>
+                <span class="meta">University of Prince Edward Island | 2019 - 2023</span>
+                <p>OCGPA: 4.24/4.3 | [cite_start]Highest GPA in Department Award[cite: 78, 79].</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="contact-bar">
+        <a href="mailto:namou@uwaterloo.ca" class="contact-btn">INITIALIZE_COMMS (EMAIL)</a>
+        <a href="https://github.com/Ergopeoxy" class="contact-btn">ACCESS_REPO (GITHUB)</a>
+        <a href="https://linkedin.com/in/negin-amou-1142162b1" class="contact-btn">LINK_NET (LINKEDIN)</a>
+    </div>
+
+    <footer style="text-align: center; margin-top: 2rem; color: #555; font-size: 0.8rem;">
+        <p>SYSTEM STATUS: ONLINE // © 2026 NEGIN AMOU</p>
+    </footer>
+</div>
+
+<script>
+    // Typing Effect Script
+    const textToType = "> USER: Negin Amou\n> STATUS: Master's Student @ UWaterloo\n> LOADING PROFILE...\n> .........................\n> SUCCESS.\n\n> BIO: 4+ years experience in Data Science & AI.\n> SPECIALIZATION: Generative AI, Medical Imaging, & 3D Vision.\n> CURRENT_OBJECTIVE: Bridging hardware & deep learning.";
+    
+    const element = document.getElementById('terminal-text');
+    let i = 0;
+
+    function typeWriter() {
+        if (i < textToType.length) {
+            element.innerHTML += textToType.charAt(i);
+            i++;
+            setTimeout(typeWriter, 30); // Adjust speed here
+        }
+    }
+    
+    // Start typing when page loads
+    window.onload = typeWriter;
+</script>
+
+</body>
+</html>
