@@ -231,6 +231,17 @@
     </section>
 
     <section>
+        <h2>>> SYSTEM_METRICS (GITHUB)</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ergopeoxy&layout=compact&theme=dark&bg_color=0d1117&hide_border=true&title_color=00f3ff&text_color=ccc" 
+                 style="height: 160px; border-left: 3px solid var(--neon-cyan); max-width: 100%;">
+            
+            <img src="https://github-readme-stats.vercel.app/api?username=Ergopeoxy&show_icons=true&theme=dark&bg_color=0d1117&hide_border=true&title_color=bc13fe&text_color=ccc&count_private=true" 
+                 style="height: 160px; border-left: 3px solid var(--neon-purple); max-width: 100%;">
+        </div>
+    </section>
+
+    <section>
         <h2>>> EXPERIENCE LOG</h2>
         <div class="card-grid">
             
@@ -308,7 +319,7 @@
         </div>
     </section>
 
-    <section>
+    <!-- <section>
         <h2>>> RESEARCH NOTES</h2>
         
         <div class="blog-post">
@@ -317,7 +328,7 @@
             <p style="color:#aaa; font-size:0.9rem; margin-bottom:1rem;">A deep dive into how I used RegGAN and Pix2Pix to transform dual-excitation PARS microscopy data into H&E stained images.</p>
             <a href="#" class="blog-link">READ ENTRY &rarr;</a>
         </div>
-    </section>
+    </section> -->
 
     <section>
         <h2>>> EDUCATION</h2>
@@ -353,7 +364,7 @@
 </div>
 
 <script>
-    // 1. TYPING EFFECT (UPDATED WITH YOUR CUSTOM TEXT)
+    // 1. TYPING EFFECT
     document.addEventListener("DOMContentLoaded", function() {
         const textToType = `> USER: Negin Amou
 > STATUS: Master's Student @ UWaterloo
@@ -371,13 +382,13 @@
             if (i < textToType.length) {
                 element.textContent += textToType.charAt(i);
                 i++;
-                setTimeout(typeWriter, 35); // Adjust typing speed (lower = faster)
+                setTimeout(typeWriter, 35);
             }
         }
         typeWriter();
     });
 
-    // 2. THREE.JS MORPHING SHAPES ANIMATION
+    // 2. THREE.JS ANIMATION (MORPHING + MOUSE FORCE)
     const init3D = () => {
         const container = document.getElementById('canvas-container');
         
@@ -442,13 +453,57 @@
             targetPositions = shapes[currentShapeIndex];
         }, 6000);
 
+
+        // --- MOUSE INTERACTION SETUP ---
+        const mouse = new THREE.Vector2(-1000, -1000); // Start off-screen
+
+        document.addEventListener('mousemove', (event) => {
+            // Normalize mouse coordinates to -1 to 1 range
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // --- ANIMATION LOOP ---
         function animate() {
             requestAnimationFrame(animate);
+            
             const positions = particles.geometry.attributes.position.array;
-            for (let i = 0; i < particleCount * 3; i++) {
+            
+            // Convert mouse screen pos to 3D world pos (rough approximation for background depth)
+            const mouseVector = new THREE.Vector3(mouse.x * 100, mouse.y * 100, 0); 
+
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                // 1. Morphing Logic
+                const tx = targetPositions[i];
+                const ty = targetPositions[i+1];
+                const tz = targetPositions[i+2];
                 const speed = (targetPositions === scatterPos) ? 0.02 : 0.04;
-                positions[i] += (targetPositions[i] - positions[i]) * speed;
+
+                // 2. Interactive Repulsion Logic
+                const px = positions[i];
+                const py = positions[i+1];
+                
+                // Calculate distance from mouse to particle
+                const dx = mouseVector.x - px;
+                const dy = mouseVector.y - py;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                
+                let forceX = 0;
+                let forceY = 0;
+
+                // If mouse is close (radius 20), push particle away
+                if (dist < 20) {
+                    const force = (20 - dist) / 20;
+                    forceX = (dx / dist) * force * -5; // Negative = repel
+                    forceY = (dy / dist) * force * -5;
+                }
+
+                // Apply both Morphing + Mouse Force
+                positions[i]   += (tx - px) * speed + forceX;
+                positions[i+1] += (ty - py) * speed + forceY;
+                positions[i+2] += (tz - positions[i+2]) * speed;
             }
+            
             particles.geometry.attributes.position.needsUpdate = true;
             particles.rotation.x += 0.001;
             particles.rotation.y += 0.002;
@@ -456,6 +511,7 @@
         }
         animate();
 
+        // Handle Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
