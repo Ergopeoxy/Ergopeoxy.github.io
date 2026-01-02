@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg-color: #050505;
-            --glass-bg: rgba(15, 15, 15, 0.85); /* Darker glass for better contrast */
+            --glass-bg: rgba(15, 15, 15, 0.9);
             --neon-cyan: #00f3ff;
             --neon-pink: #bc13fe;
             --neon-green: #0aff0a;
@@ -46,7 +46,7 @@
             margin: 0 auto;
             padding: 2rem;
             position: relative;
-            z-index: 1; /* Sits above the matrix rain */
+            z-index: 1; 
         }
 
         /* --- Typography & Glitch Effect --- */
@@ -129,13 +129,6 @@
             font-size: 1.8rem;
         }
 
-        /* --- Visual Gallery (Projects) --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
         /* --- Cards (Experience/Education) --- */
         .card-grid {
             display: grid;
@@ -168,7 +161,7 @@
         .skill-tag {
             background: var(--neon-pink);
             border: 1px solid var(--neon-pink);
-            color: #000; /* Black text for readability */
+            color: #000;
             padding: 8px 18px;
             font-family: var(--font-head);
             font-size: 0.9rem;
@@ -220,16 +213,6 @@
             box-shadow: 0 0 20px var(--neon-cyan);
         }
 
-        /* --- Animations --- */
-        @keyframes glitch-skew {
-            0% { transform: skew(0deg); }
-            20% { transform: skew(-2deg); }
-            40% { transform: skew(2deg); }
-            60% { transform: skew(-1deg); }
-            80% { transform: skew(3deg); }
-            100% { transform: skew(0deg); }
-        }
-
         @media (max-width: 768px) {
             .glitch { font-size: 2.5rem; }
             .container { padding: 1rem; }
@@ -259,37 +242,6 @@
     </section>
 
     <section>
-        <h2>>> VISUAL_EVIDENCE (PROJECTS)</h2>
-        <div class="gallery-grid">
-            <div class="card" style="padding: 0; border: none; overflow: hidden;">
-                <div style="height: 180px; background: #111; display: flex; align-items: center; justify-content: center;">
-                    <span style="color: var(--neon-pink); font-size: 2rem;">[ CYCLE_GAN_IMG ]</span>
-                </div>
-                <div style="padding: 1.5rem; border-top: 2px solid var(--neon-pink);">
-                    <h3>Virtual H&E Staining</h3>
-                    <p style="font-size: 0.9rem; color: #ccc;">
-                        Leveraging CycleGAN & RegGAN to transform label-free PARS microscopy data into H&E stained pathology images.
-                    </p>
-                    <a href="#" class="blog-link">> VIEW_PIPELINE</a>
-                </div>
-            </div>
-
-            <div class="card" style="padding: 0; border: none; overflow: hidden;">
-                <div style="height: 180px; background: #111; display: flex; align-items: center; justify-content: center;">
-                    <span style="color: var(--neon-cyan); font-size: 2rem;">[ 3D_CLOUD_IMG ]</span>
-                </div>
-                <div style="padding: 1.5rem; border-top: 2px solid var(--neon-cyan);">
-                    <h3>3D Segmentation</h3>
-                    <p style="font-size: 0.9rem; color: #ccc;">
-                        Automated segmentation of industrial beams and columns using geometric clustering algorithms.
-                    </p>
-                    <a href="#" class="blog-link">> VIEW_RESULTS</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
         <h2>>> SYSTEM_CAPABILITIES</h2>
         <div class="skills-container">
             <span class="skill-tag">Python (PyTorch, TensorFlow)</span>
@@ -313,22 +265,28 @@
                 <h3>AI and Software Developer</h3>
                 <span class="meta">PhotoMedicine Labs at University of Waterloo | Sep 2025 - Present</span>
                 <ul>
-                    [cite_start]<li>Reproduced and validated deep learning frameworks (CycleGAN, RegGAN, Pix2Pix) for virtual multi-staining pipelines using PARS microscopy data[cite: 18].</li>
-                    [cite_start]<li>Implemented training/inference pipelines for virtual staining, performed hyperparameter tuning, and reproduced research results[cite: 19].</li>
-                    [cite_start]<li>Developed a Python Flask GUI for the PARS virtual staining library to streamline internal testing[cite: 20].</li>
-                    [cite_start]<li>Set up and programmed Alazar Tech ATS digitizer cards for synchronized data acquisition using C++ backend logic[cite: 22].</li>
-                    [cite_start]<li>Built a high-performance workstation for model training and reconstruction workflows[cite: 21].</li>
+                    <li>Reproduced and validated deep learning frameworks (CycleGAN, RegGAN, Pix2Pix) for virtual multi-staining pipelines using PARS microscopy data.</li>
+                    <li>Implemented complete training and inference pipelines for virtual staining, performed hyperparameter tuning, and reproduced results from the associated research paper.</li>
+                    <li>Developed a Python Flask-based graphical user interface for the PARS virtual staining library to streamline internal testing and data visualization.</li>
+                    <li>Built a high-performance workstation from scratch to support model training and PARS reconstruction workflows (hardware selection, assembly, OS).</li>
+                    <li>Set up, integrated, and programmed Alazar Tech ATS digitizer cards for synchronized PARS data acquisition using C++ backend logic and ImGui for the front-end visualization layer.</li>
+                    <li>Developed synchronized acquisition routines enabling coordinated triggering between lasers, actuators, and digitizer cards for real-time PARS imaging.</li>
+                    <li>Explored the application of UNIT and MUNIT frameworks for next-generation virtual staining research and cross-domain translation of PARS contrast channels.</li>
+                    <li>Collaborated closely with graduate researchers to validate imaging outputs, investigate model failure modes, and support ongoing algorithmic improvements.</li>
                 </ul>
             </div>
 
             <div class="card">
-                <h3>AI Computer Vision Researcher</h3>
-                <span class="meta">Smart Structure Lab at UWaterloo | May 2025 - Present</span>
+                <h3>AI Computer Vision Researcher / Developer</h3>
+                <span class="meta">Computer Vision for Smart Structure Lab at UWaterloo | May 2025 - Present</span>
                 <ul>
-                    [cite_start]<li>Automated segmentation of 3D point clouds for structural components (beams, columns) sponsored by OPG[cite: 29].</li>
-                    [cite_start]<li>Innovated automated solutions to estimate point cloud area, volume, and shape category[cite: 30].</li>
-                    [cite_start]<li>Developed Bill Of Material (BOM) software with Python Flask and Postgres[cite: 30].</li>
-                    [cite_start]<li>Researched methods for categorization and measurement of industrial components[cite: 31].</li>
+                    <li>Worked under the supervision of Professor Haas and sponsored by Ontario Power Generation (OPG), to automate segmentation and templating of 3D point clouds by training AI models.</li>
+                    <li>Developed Bill Of Material Software (BOM) with Python Flask and Postgres to store and categorize structural components.</li>
+                    <li>Innovated automated and human-guided solutions to accurately estimate the point cloud's area, volume and shape category.</li>
+                    <li>Worked with minimal supervision, researched new concepts and developed new skills as the project progressed.</li>
+                    <li>Researched new methods for categorization and measurements of industrial components (beams, columns, floors, etc).</li>
+                    <li>Utilized machine learning and data science techniques to clean, categorize and process point cloud data.</li>
+                    <li>Working towards publishing our innovation and automation software.</li>
                 </ul>
             </div>
 
@@ -336,10 +294,11 @@
                 <h3>IT Analyst</h3>
                 <span class="meta">Action Aero | May 2021 - Aug 2024</span>
                 <ul>
-                    [cite_start]<li>Programmed and debugged custom software (Shipment Estimator, CRM, OEM)[cite: 38].</li>
-                    [cite_start]<li>Automated daily processes using PowerShell and Python[cite: 39].</li>
-                    [cite_start]<li>Created applications using C# (WinForm/WPF), PHP, and Oracle/MySQL databases[cite: 40].</li>
-                    [cite_start]<li>Conducted data analysis using Power BI and Crystal Reports to identify production patterns[cite: 40].</li>
+                    <li>Worked on programming, documenting, and debugging custom-made software such as Shipment Estimator, CRM, OEM, and other ongoing projects.</li>
+                    <li>Automated and optimized daily processes by scripting in PowerShell and Python.</li>
+                    <li>Created need-based applications using C# (WinForm/WPF), PHP, and database management systems (Oracle & MySQL).</li>
+                    <li>Conducted data analysis and reporting to identify patterns in production, inventory, and turnaround time using Oracle and MySQL databases, Crystal Reports, Power BI, and Excel.</li>
+                    <li>Contributed to configuration and maintenance of Cisco network switches.</li>
                 </ul>
             </div>
 
@@ -347,9 +306,11 @@
                 <h3>Angular Developer</h3>
                 <span class="meta">Maximus Canada | Jan 2021 - Apr 2021</span>
                 <ul>
-                    [cite_start]<li>Used Angular framework and TypeScript to develop web applications[cite: 44].</li>
-                    [cite_start]<li>Developed technical designs and participated in design reviews[cite: 45].</li>
-                    [cite_start]<li>Performed unit and integration testing; leveraged CI/CD practices for reliable builds[cite: 46, 49].</li>
+                    <li>Used Angular framework and TypeScript to develop web applications.</li>
+                    <li>Developed technical designs according to functional specifications and participated in design reviews.</li>
+                    <li>Performed unit and integration testing to ensure proper and efficient software execution.</li>
+                    <li>Supported systems in test and production environments by debugging issues.</li>
+                    <li>Developed unit and integration tests while contributing to shared GitHub repositories, leveraging CI/CD practices to ensure reliable builds and smooth deployments.</li>
                 </ul>
             </div>
 
@@ -357,9 +318,12 @@
                 <h3>Cybersecurity Analyst</h3>
                 <span class="meta">Invesco Ltd. | Sep 2020 - Dec 2020</span>
                 <ul>
-                    [cite_start]<li>Worked with SIEM tools (IBM QRadar, CrowdStrike) to detect and respond to threats[cite: 52, 58].</li>
-                    [cite_start]<li>Automated threat detection for firewalls using MineMeld and OSINT[cite: 53].</li>
-                    [cite_start]<li>Collaborated on incident response and firewall rule setup[cite: 54, 55].</li>
+                    <li>Worked with SIEM tools to protect, detect, prevent, and respond to cyber threats.</li>
+                    <li>Automated threat detection for firewall using MineMeld to aggregate threat information using OSINT.</li>
+                    <li>Collaborated with other security team members for incident response.</li>
+                    <li>Worked on setting up firewall rules during incident response.</li>
+                    <li>Researched security breaches, CVEs and read on latest cyber attack news to stay updated and provide a report back to the team.</li>
+                    <li>Worked with IBM QRadar, VirusTotal and CrowdStrike to identify threats, and take appropriate actions.</li>
                 </ul>
             </div>
 
@@ -367,9 +331,11 @@
                 <h3>Tech Lead</h3>
                 <span class="meta">University of Prince Edward Island | Jan 2023 - May 2023</span>
                 <ul>
-                    [cite_start]<li>Led the Virtual Wellness project with a team of six developers[cite: 61].</li>
-                    [cite_start]<li>Used PHP for back-end and JavaScript/HTML/CSS for front-end[cite: 62].</li>
-                    [cite_start]<li>Managed Git repository and implemented CI/CD pipelines with GitHub Actions[cite: 64, 66].</li>
+                    <li>Led the Virtual Wellness project with a team of six developers.</li>
+                    <li>Used PHP for back-end development and JavaScript/CSS/HTML for front end.</li>
+                    <li>Wrote extensive unit tests and security documentation for the project.</li>
+                    <li>Managed the Git repository to ensure seamless collaboration.</li>
+                    <li>Implemented and maintained CI/CD pipelines with GitHub Actions, contributing to repository management, automated testing, and collaborative development workflows.</li>
                 </ul>
             </div>
 
@@ -392,21 +358,23 @@
         <h2>>> MEMORY_BANKS: EDUCATION</h2>
         <div class="card-grid">
             <div class="card" style="border-left-color: var(--neon-green);">
-                <h3>Master of Data Science and AI</h3>
+                <h3>Master of Data Science and Artificial Intelligence</h3>
                 <span class="meta">University of Waterloo | Sep 2024 - Dec 2025</span>
                 <ul>
-                    [cite_start]<li>Winner of Scotia Bank Entrance Scholarship (CAD 10,000)[cite: 72].</li>
-                    [cite_start]<li>CGPA 3.9/4[cite: 73].</li>
-                    [cite_start]<li>Teaching Assistant for CS 136L[cite: 74].</li>
+                    <li>Winner of Scotia Bank Entrance Scholarship (CAD 10,000)</li>
+                    <li>CGPA 3.9/4</li>
+                    <li>Worked as Teaching Assistant in CS 136L to answer students' questions and help them with course material</li>
                 </ul>
             </div>
             <div class="card" style="border-left-color: var(--neon-green);">
-                <h3>BSc in Computer Science and Mathematics</h3>
-                <span class="meta">University of Prince Edward Island | 2019 - 2023</span>
+                <h3>Bachelor of Science in Computer Science and Mathematics</h3>
+                <span class="meta">University of Prince Edward Island | Sep 2019 - May 2023</span>
                 <ul>
-                    [cite_start]<li>Winner of Graduating Student Award (Highest GPA in department)[cite: 78].</li>
-                    [cite_start]<li>OCGPA: 4.24/4.3[cite: 79].</li>
-                    [cite_start]<li>Authored technical papers on cybersecurity topics (OSINT, Cryptography, AI)[cite: 82].</li>
+                    <li>Winner of "School of Mathematical and Computational Sciences Graduating Student Award" (Highest GPA in the department)</li>
+                    <li>OCGPA: 4.24/4.3</li>
+                    <li>Academic Excellence Award (2019-2023)</li>
+                    <li>Dean's Honours List (2019-2020 & 2021-2022)</li>
+                    <li>Authored technical papers on cybersecurity topics, including OSINT, network security, web application security, cryptography, and AI in cybersecurity.</li>
                 </ul>
             </div>
         </div>
